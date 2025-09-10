@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import WebsiteName from '@/components/WebsiteName.vue'
+import SearchField from '@/components/SearchField.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+function onSearchSubmit(query: string) {
+  router.push({ name: 'search', query: { q: query } })
+}
 </script>
 
 <template>
   <div>
-    <h1>Welcome to <WebsiteName /></h1>
-    <h2>Recipes</h2>
+    <SearchField @submit="onSearchSubmit" />
+    <h3>Newest recipes</h3>
   </div>
 </template>
