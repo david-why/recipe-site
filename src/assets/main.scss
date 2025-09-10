@@ -1,0 +1,17 @@
+/* bootstrap & bootstrap-icons */
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "bootstrap-icons/font/bootstrap-icons";
+
+@import 'bootstrap/scss/bootstrap';
+
+:root {
+  --text-gradient: #ff7e5f, #feb47b;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--text-gradient));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
