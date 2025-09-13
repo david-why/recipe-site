@@ -138,7 +138,6 @@ interface GetRecipeByIdOptions {
 }
 
 export async function getRecipeById({ recipeId }: GetRecipeByIdOptions) {
-  console.log(new Date())
   const recipes = await sql<Recipe[]>`
 SELECT
     r.id,
@@ -231,6 +230,29 @@ LEFT JOIN (
     GROUP BY rsg.recipe_id
 ) AS rsg ON r.id = rsg.recipe_id
 WHERE r.id = ${recipeId}`
-  console.log(new Date())
   return recipes[0]
+}
+
+export async function searchRecipes(query: string) {
+  const recipes = await sql<Recipe[]>`
+SELECT
+    r.id,
+    r.title,
+    r.tags,
+    r.active_time,
+    r.total_time,
+    r.difficulty,
+    r.serving_size,
+    r.serving_unit,
+    r.images,
+    r.additional_info,
+    r.created_at
+FROM recipes AS r
+WHERE r.id IN (
+    SELECT id
+    FROM recipes
+    WHERE title ILIKE '%' || ${query} || '%'
+)
+ORDER BY r.created_at DESC`
+  return recipes
 }

@@ -6,6 +6,7 @@ import {
   getCategoryRecipes,
   getRecipeById,
   getRecipes,
+  searchRecipes,
 } from './backend/database'
 
 const PORT = Number(process.env.PORT || 20223)
@@ -78,6 +79,13 @@ Bun.serve({
       GET: async (req) => {
         const recipeId = req.params.recipeId
         return Response.json(await getRecipeById({ recipeId }))
+      },
+    },
+    '/api/search': {
+      GET: async (req) => {
+        const url = new URL(req.url)
+        const query = url.searchParams.get('q') || ''
+        return Response.json(await searchRecipes(query))
       },
     },
     '/api/*': notFound,

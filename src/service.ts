@@ -30,3 +30,7 @@ export async function getCategoryRecipes(categoryId: string): Promise<Recipe[]> 
 export async function getRecipeById(recipeId: string): Promise<FullRecipe> {
   return service.get(`/recipes/${recipeId}`)
 }
+
+export async function searchRecipes(query: string): Promise<Recipe[]> {
+  return service.get('/search', { params: { q: query } })
+}

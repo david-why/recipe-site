@@ -14,6 +14,8 @@ DROP TABLE IF EXISTS recipe_nutritions;
 DROP TABLE IF EXISTS recipe_nutrition_groups;
 DROP TABLE IF EXISTS recipes;
 
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 CREATE TABLE recipes (
     id TEXT PRIMARY KEY NOT NULL,
     title TEXT NOT NULL,
@@ -129,3 +131,10 @@ CREATE INDEX idx_rng_recipeid ON recipe_nutrition_groups(recipe_id);
 CREATE INDEX idx_rn_groupid ON recipe_nutritions(group_id);
 CREATE INDEX idx_rc_recipeid ON recipe_categories(recipe_id);
 CREATE INDEX idx_ri_groupid ON recipe_ingredients(group_id);
+
+-- Indexes for searching recipes
+
+CREATE INDEX idx_recipes_title ON recipes USING gin (title gin_trgm_ops);
+CREATE INDEX idx_recipes_tags ON recipes USING gin (tags);
+CREATE INDEX idx_ingredients_name ON ingredients USING gin (name gin_trgm_ops);
+CREATE INDEX idx_categories_name ON categories USING gin (name gin_trgm_ops);

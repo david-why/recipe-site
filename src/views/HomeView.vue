@@ -35,8 +35,8 @@ onMounted(async () => {
 
 <template>
   <div>
-    <SearchField @submit="onSearchSubmit" />
-    <h3 class="mb-4">Explore...</h3>
+    <SearchField @search="onSearchSubmit" />
+    <h3 class="my-4">Explore...</h3>
     <div v-if="loadingCategories">
       <LoadingIcon />
     </div>
