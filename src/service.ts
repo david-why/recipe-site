@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Category, Pagination, Recipe } from '../shared/types'
+import type { Category, Recipe } from '../shared/types'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
@@ -23,9 +23,10 @@ export async function getCategoryById(categoryId: string): Promise<Category> {
   return service.get(`/categories/${categoryId}`)
 }
 
-export async function getCategoryRecipes(
-  categoryId: string,
-  pagination?: Pagination,
-): Promise<Recipe[]> {
-  return service.get(`/categories/${categoryId}/recipes`, { params: pagination })
+export async function getCategoryRecipes(categoryId: string): Promise<Recipe[]> {
+  return service.get(`/categories/${categoryId}/recipes`)
+}
+
+export async function getRecipeById(recipeId: string): Promise<Recipe> {
+  return service.get(`/recipes/${recipeId}`)
 }

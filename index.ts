@@ -1,6 +1,12 @@
 import { readdirSync } from 'fs'
 import { resolve } from 'path'
-import { getCategories, getCategoryById, getCategoryRecipes, getRecipes } from './backend/database'
+import {
+  getCategories,
+  getCategoryById,
+  getCategoryRecipes,
+  getRecipeById,
+  getRecipes,
+} from './backend/database'
 
 const PORT = Number(process.env.PORT || 20223)
 
@@ -66,6 +72,12 @@ Bun.serve({
             categoryId,
           }),
         )
+      },
+    },
+    '/api/recipes/:recipeId': {
+      GET: async (req) => {
+        const recipeId = req.params.recipeId
+        return Response.json(await getRecipeById({ recipeId }))
       },
     },
     '/api/*': notFound,

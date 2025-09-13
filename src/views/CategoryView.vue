@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LoadingIcon from '@/components/LoadingIcon.vue'
+import RecipeCard from '@/components/RecipeCard.vue'
 import { getCategoryById, getCategoryRecipes } from '@/service'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -45,14 +46,7 @@ onMounted(async () => {
     <div v-else>
       <div class="row g-3">
         <div class="col-6 col-md-4 col-lg-3" v-for="recipe in recipes" :key="recipe.id">
-          <div class="card">
-            <RouterLink :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-              ><img class="card-img-top" :src="recipe.images[0]"
-            /></RouterLink>
-            <div class="card-body">
-              <h5 class="card-title">{{ recipe.title }}</h5>
-            </div>
-          </div>
+          <RecipeCard :recipe="recipe" />
         </div>
       </div>
     </div>

@@ -118,3 +118,14 @@ CREATE TABLE collection_recipes (
     collection_id TEXT NOT NULL REFERENCES collections(id) ON DELETE CASCADE,
     recipe_id TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE
 );
+
+-- Indexes for SELECT recipes
+
+CREATE INDEX idx_ru_recipeid ON recipe_utensils(recipe_id);
+CREATE INDEX idx_rig_recipeid ON recipe_ingredient_groups(recipe_id);
+CREATE INDEX idx_rsg_recipeid ON recipe_step_groups(recipe_id);
+CREATE INDEX idx_rs_groupid ON recipe_steps(group_id);
+CREATE INDEX idx_rng_recipeid ON recipe_nutrition_groups(recipe_id);
+CREATE INDEX idx_rn_groupid ON recipe_nutritions(group_id);
+CREATE INDEX idx_rc_recipeid ON recipe_categories(recipe_id);
+CREATE INDEX idx_ri_groupid ON recipe_ingredients(group_id);
