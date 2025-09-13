@@ -16,10 +16,3 @@ export interface Category {
   id: string
   name: string
 }
-
-// api types
-
-export interface Pagination {
-  page: number
-  size: number
-}

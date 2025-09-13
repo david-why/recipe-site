@@ -38,7 +38,7 @@ onMounted(async () => {
     <LoadingIcon />
   </div>
   <div v-else>
-    <h2>{{ category.name }}</h2>
+    <h1 class="mb-4">{{ category.name }}</h1>
     <div v-if="!recipes">
       <LoadingIcon />
     </div>
@@ -46,7 +46,9 @@ onMounted(async () => {
       <div class="row g-3">
         <div class="col-6 col-md-4 col-lg-3" v-for="recipe in recipes" :key="recipe.id">
           <div class="card">
-            <img class="card-img-top" :src="recipe.images[0]" />
+            <RouterLink :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+              ><img class="card-img-top" :src="recipe.images[0]"
+            /></RouterLink>
             <div class="card-body">
               <h5 class="card-title">{{ recipe.title }}</h5>
             </div>

@@ -1,14 +1,9 @@
 import { sql } from 'bun'
-import { getSqlLimitOffset } from './pagination'
-import { Category, Pagination, Recipe } from '~/shared/types'
+import { Category, Recipe } from '~/shared/types'
 
 // db functions
 
-interface GetRecipesOptions {
-  pagination?: Pagination
-}
-
-export async function getRecipes({ pagination }: GetRecipesOptions = {}) {
+export async function getRecipes() {
   const recipes = await sql<Recipe[]>`
 SELECT
     r.id,
@@ -97,8 +92,7 @@ LEFT JOIN units AS u2 ON ri.unit_id = u2.id
 LEFT JOIN recipe_categories AS rc ON r.id = rc.recipe_id
 LEFT JOIN categories AS c ON rc.category_id = c.id
 
-GROUP BY r.id
-${getSqlLimitOffset(pagination)}`
+GROUP BY r.id`
   return recipes
 }
 
@@ -114,10 +108,9 @@ export async function getCategoryById(categoryId: string) {
 
 interface GetCategoryRecipesOptions {
   categoryId: string
-  pagination?: Pagination
 }
 
-export async function getCategoryRecipes({ categoryId, pagination }: GetCategoryRecipesOptions) {
+export async function getCategoryRecipes({ categoryId }: GetCategoryRecipesOptions) {
   const recipes = await sql<Recipe[]>`
 SELECT
     r.id,
@@ -134,6 +127,6 @@ SELECT
 FROM recipes AS r
 JOIN recipe_categories AS rc ON r.id = rc.recipe_id
 JOIN categories AS c ON rc.category_id = c.id
-WHERE c.id = ${categoryId} ${getSqlLimitOffset(pagination)}`
+WHERE c.id = ${categoryId}`
   return recipes
 }

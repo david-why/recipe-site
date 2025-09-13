@@ -13,6 +13,11 @@ const router = createRouter({
       name: 'category',
       component: () => import('../views/CategoryView.vue'),
     },
+    {
+      path: '/recipe/:recipeId',
+      name: 'recipe',
+      component: () => import('../views/RecipeView.vue'),
+    },
   ],
 })
 
