@@ -2,6 +2,7 @@
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import DurationText from '@/components/text/DurationText.vue'
 import { getRecipeById } from '@/service'
+import { strip } from '@/utils'
 import { Carousel } from 'bootstrap'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -39,6 +40,7 @@ const displayRecipe = computed(() => {
       ...ig,
       ingredients: ig.ingredients.map((i) => ({
         ...i,
+        preparation: strip(i.preparation, '，, '),
         show_quantity: !!i.quantity_start,
         is_range: i.quantity_start !== i.quantity_end,
       })),
@@ -95,7 +97,7 @@ onBeforeUnmount(() => {
               :key="url"
             ></button>
           </div>
-          <div class="carousel-inner">
+          <div class="carousel-inner rounded">
             <div
               class="carousel-item"
               :class="{ active: index === 0 }"
@@ -146,7 +148,7 @@ onBeforeUnmount(() => {
 
     <div class="row">
       <!-- Info sidebar -->
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-lg-4">
         <!-- Ingredients card -->
         <div class="card mb-4">
           <div class="card-body">
@@ -157,7 +159,14 @@ onBeforeUnmount(() => {
                 <ul class="list-unstyled d-flex flex-column gap-2 mt-3">
                   <li v-for="ingredient in group.ingredients" :key="ingredient.id">
                     <div class="row">
-                      <div class="col-8">{{ ingredient.name }}</div>
+                      <div class="col-8">
+                        {{ ingredient.name
+                        }}<template v-if="ingredient.preparation"
+                          ><br /><small class="text-secondary">{{
+                            ingredient.preparation
+                          }}</small></template
+                        >
+                      </div>
                       <div class="col-4 text-end text-secondary">
                         <template v-if="ingredient.show_quantity">
                           {{ ingredient.quantity_start
@@ -166,7 +175,6 @@ onBeforeUnmount(() => {
                           >
                           {{ ingredient.unit_name || '' }}
                         </template>
-                        {{ ingredient.preparation || '' }}
                       </div>
                     </div>
                   </li>
@@ -200,7 +208,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Main content -->
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-lg-8">
         <!-- Steps -->
         <div class="card mb-4" v-for="group in displayRecipe.step_groups" :key="group.id">
           <div class="card-body">
@@ -232,12 +240,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </div>
-
-    <!-- <textarea
-      class="form-control mt-5"
-      style="height: 20rem"
-      :value="JSON.stringify(recipe, null, 4)"
-    ></textarea> -->
   </div>
 </template>
 
