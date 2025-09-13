@@ -1,9 +1,13 @@
 export interface Recipe {
   id: number
   title: string
-  description: string
-  ingredients: string[]
-  instructions: string[]
-  createdAt: string
-  updatedAt: string
+  tags: string[]
+  active_time: number | null
+  total_time: number | null
+  difficulty: 'easy' | 'medium' | 'advanced'
+  serving_size: number
+  serving_unit: string | null
+  images: string[]
+  additional_info: string[]
+  created_at: string
 }
