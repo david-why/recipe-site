@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import SearchField from '@/components/SearchField.vue'
-import { getRecipes } from '@/service'
+import { getCategories } from '@/service'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import type { Recipe } from '../../shared/types'
+import type { Category } from '../../shared/types'
+import LoadingIcon from '@/components/LoadingIcon.vue'
 const router = useRouter()
 
 // state
-const loadingRecentRecipes = ref(false)
-const recentRecipes = ref<Recipe[]>([])
+const loadingCategories = ref(false)
+const categories = ref<Category[]>([])
 
 // functions
 
-async function updateRecentRecipes() {
-  loadingRecentRecipes.value = true
+async function updateCategories() {
+  loadingCategories.value = true
   try {
-    recentRecipes.value = await getRecipes()
-    console.log(recentRecipes.value)
+    categories.value = await getCategories()
   } finally {
-    loadingRecentRecipes.value = false
+    loadingCategories.value = false
   }
 }
 
@@ -29,13 +29,29 @@ function onSearchSubmit(query: string) {
 }
 
 onMounted(async () => {
-  updateRecentRecipes()
+  updateCategories()
 })
 </script>
 
 <template>
   <div>
     <SearchField @submit="onSearchSubmit" />
-    <h3>Newest recipes</h3>
+    <h3>Explore...</h3>
+    <div v-if="loadingCategories">
+      <LoadingIcon />
+    </div>
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-3 mb-3" v-for="category in categories" :key="category.id">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-0">
+              <RouterLink :to="{ name: 'category', params: { categoryId: category.id } }">{{
+                category.name
+              }}</RouterLink>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

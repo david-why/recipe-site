@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
 import { resolve } from 'path'
-import { getRecipes } from './backend/database'
+import { getCategories, getCategoryById, getRecipes } from './backend/database'
 import { getPaginationParams } from './backend/pagination'
 
 const PORT = Number(process.env.PORT || 20223)
@@ -17,6 +17,7 @@ class BizError extends Error {
 }
 
 // some constant routes
+
 const index = () =>
   new Response(Bun.file(`${publicPath}/index.html`), {
     headers: { 'Content-Type': 'text/html' },
@@ -42,12 +43,25 @@ staticFiles['/'] = index
 Bun.serve({
   routes: {
     ...staticFiles,
-    '/api/recipes': async (req) => {
-      return Response.json(
-        await getRecipes({
-          pagination: getPaginationParams(new URL(req.url)),
-        }),
-      )
+    '/api/recipes': {
+      GET: async (req) => {
+        return Response.json(
+          await getRecipes({
+            pagination: getPaginationParams(new URL(req.url)),
+          }),
+        )
+      },
+    },
+    '/api/categories': {
+      GET: async () => {
+        return Response.json(await getCategories())
+      },
+    },
+    '/api/categories/:categoryId': {
+      GET: async (req) => {
+        const categoryId = req.params.categoryId
+        return Response.json(await getCategoryById(categoryId))
+      },
     },
   },
   async fetch(req) {

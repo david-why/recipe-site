@@ -1,6 +1,6 @@
 import { sql } from 'bun'
 import { getSqlLimitOffset, Pagination } from './pagination'
-import { Recipe } from '~/shared/types'
+import { Category, Recipe } from '~/shared/types'
 
 // db functions
 
@@ -101,4 +101,14 @@ GROUP BY r.id`
 export async function getRecipes({ pagination }: GetRecipesOptions = {}) {
   const recipes = await sql<Recipe[]>`${SELECT_RECIPES} ${getSqlLimitOffset(pagination)}`
   return recipes
+}
+
+export async function getCategories() {
+  const categories = await sql<Category[]>`SELECT id, name FROM categories ORDER BY id`
+  return categories
+}
+
+export async function getCategoryById(categoryId: string) {
+  const category = await sql<Category[]>`SELECT id, name FROM categories WHERE id = ${categoryId}`
+  return category[0]
 }
