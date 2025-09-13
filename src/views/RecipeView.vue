@@ -10,6 +10,17 @@ const route = useRoute()
 
 const recipeId = route.params.recipeId as string
 
+const NUTRITION_TYPES: Record<string, string> = {
+  kJ: 'Energy',
+  kcal: 'Energy (kcal)',
+  protein: 'Proteins',
+  carb2: 'Carbohydrates',
+  fat: 'Fats',
+  saturatedFat: 'Saturated Fats',
+  dietaryFibre: 'Dietary Fibre',
+  sodium: 'Sodium',
+}
+
 // state
 
 const carouselEl = ref<HTMLElement>()
@@ -30,6 +41,13 @@ const displayRecipe = computed(() => {
         ...i,
         show_quantity: !!i.quantity_start,
         is_range: i.quantity_start !== i.quantity_end,
+      })),
+    })),
+    nutrition_groups: recipe.value.nutrition_groups.map((ng) => ({
+      ...ng,
+      nutritions: ng.nutritions.map((n) => ({
+        ...n,
+        type: NUTRITION_TYPES[n.type] ?? n.type,
       })),
     })),
   }
@@ -127,6 +145,7 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="row">
+      <!-- Info sidebar -->
       <div class="col-12 col-md-4">
         <!-- Ingredients card -->
         <div class="card mb-4">
@@ -156,13 +175,76 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
+
+        <!-- Dietary info card -->
+        <div class="card mb-4" v-for="group in displayRecipe.nutrition_groups" :key="group.id">
+          <div class="card-body">
+            <h5 class="card-title">
+              Nutritions
+              <small class="text-secondary fw-normal ms-3"
+                >per {{ group.quantity }} {{ group.unit }}</small
+              >
+            </h5>
+            <ul class="list-unstyled d-flex flex-column gap-2 mt-3">
+              <li v-for="nutrition in group.nutritions" :key="nutrition.type">
+                <div class="row">
+                  <div class="col-8">{{ nutrition.type }}</div>
+                  <div class="col-4 text-end text-secondary">
+                    {{ nutrition.number }} {{ nutrition.unit }}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="col-12 col-md-8">
+        <!-- Steps -->
+        <div class="card mb-4" v-for="group in displayRecipe.step_groups" :key="group.id">
+          <div class="card-body">
+            <h5 class="card-title">{{ group.title || 'Preparation Steps' }}</h5>
+            <ol>
+              <li class="mb-2" v-for="step in group.steps" :key="step.text" v-html="step.text"></li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Category list -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Categories</h5>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item"
+                  v-for="category in recipe.categories"
+                  :key="category.id"
+                >
+                  <RouterLink :to="{ name: 'category', params: { categoryId: category.id } }">
+                    {{ category.name }}</RouterLink
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <textarea
+    <!-- <textarea
       class="form-control mt-5"
       style="height: 20rem"
       :value="JSON.stringify(recipe, null, 4)"
-    ></textarea>
+    ></textarea> -->
   </div>
 </template>
+
+<style scoped>
+:deep(nobr) {
+  padding-inline-start: 0.3em;
+  padding-inline-end: 0.3em;
+  font-weight: bold;
+}
+</style>

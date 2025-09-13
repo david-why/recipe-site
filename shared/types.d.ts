@@ -33,6 +33,34 @@ export interface RecipeIngredient {
   quantity_end: number
 }
 
+export interface RecipeNutritionGroup {
+  id: string
+  name: string
+  quantity: number
+  unit: string
+  nutritions: RecipeNutrition[]
+}
+
+export interface RecipeNutrition {
+  type: string
+  unit: string
+  number: number
+}
+
+export interface RecipeStepGroup {
+  id: string
+  title: string
+  steps: RecipeStep[]
+}
+
+export interface RecipeStep {
+  text: string
+  title: string
+}
+
 export interface FullRecipe extends Recipe {
   ingredient_groups: RecipeIngredientGroup[]
+  nutrition_groups: RecipeNutritionGroup[]
+  step_groups: RecipeStepGroup[]
+  categories: Category[]
 }
