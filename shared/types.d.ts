@@ -64,3 +64,10 @@ export interface FullRecipe extends Recipe {
   step_groups: RecipeStepGroup[]
   categories: Category[]
 }
+
+export interface Collection {
+  id: string
+  title: string
+  description: string
+  image: string | null
+}

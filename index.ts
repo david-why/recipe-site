@@ -4,6 +4,9 @@ import {
   getCategories,
   getCategoryById,
   getCategoryRecipes,
+  getCollectionById,
+  getCollectionRecipes,
+  getCollections,
   getRecipeById,
   getRecipes,
   searchRecipes,
@@ -86,6 +89,23 @@ Bun.serve({
         const url = new URL(req.url)
         const query = url.searchParams.get('q') || ''
         return Response.json(await searchRecipes(query))
+      },
+    },
+    '/api/collections': {
+      GET: async () => {
+        return Response.json(await getCollections())
+      },
+    },
+    '/api/collections/:collectionId': {
+      GET: async (req) => {
+        const collectionId = req.params.collectionId
+        return Response.json(await getCollectionById({ collectionId }))
+      },
+    },
+    '/api/collections/:collectionId/recipes': {
+      GET: async (req) => {
+        const collectionId = req.params.collectionId
+        return Response.json(await getCollectionRecipes({ collectionId }))
       },
     },
     '/api/*': notFound,

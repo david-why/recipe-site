@@ -1,5 +1,5 @@
 import { sql } from 'bun'
-import { Category, Recipe } from '~/shared/types'
+import { Category, Collection, Recipe } from '~/shared/types'
 
 // db functions
 
@@ -254,5 +254,48 @@ WHERE r.id IN (
     WHERE title ILIKE '%' || ${query} || '%'
 )
 ORDER BY r.created_at DESC`
+  return recipes
+}
+
+export async function getCollections() {
+  const collections = await sql<
+    Collection[]
+  >`SELECT id, title, description, image FROM collections ORDER BY id`
+  return collections
+}
+
+interface GetCollectionByIdOptions {
+  collectionId: string
+}
+
+export async function getCollectionById({ collectionId }: GetCollectionByIdOptions) {
+  const collections = await sql<
+    Collection[]
+  >`SELECT id, title, description, image FROM collections WHERE id = ${collectionId}`
+  return collections[0]
+}
+
+interface GetCollectionRecipesOptions {
+  collectionId: string
+}
+
+export async function getCollectionRecipes({ collectionId }: GetCollectionRecipesOptions) {
+  const recipes = await sql<Recipe[]>`
+SELECT
+    r.id,
+    r.title,
+    r.tags,
+    r.active_time,
+    r.total_time,
+    r.difficulty,
+    r.serving_size,
+    r.serving_unit,
+    r.images,
+    r.additional_info,
+    r.created_at
+FROM recipes AS r
+JOIN collection_recipes AS cr ON r.id = cr.recipe_id
+JOIN collections AS c ON cr.collection_id = c.id
+WHERE c.id = ${collectionId}`
   return recipes
 }
