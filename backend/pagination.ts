@@ -1,9 +1,5 @@
 import { sql } from 'bun'
-
-export interface Pagination {
-  page: number
-  size: number
-}
+import { Pagination } from '~/shared/types'
 
 export function getPaginationParams(url: URL, maxSize = 10): Pagination {
   const page = parseInt(url.searchParams.get('page') || '1')

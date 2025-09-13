@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
 import { resolve } from 'path'
-import { getCategories, getCategoryById, getRecipes } from './backend/database'
+import { getCategories, getCategoryById, getCategoryRecipes, getRecipes } from './backend/database'
 import { getPaginationParams } from './backend/pagination'
 
 const PORT = Number(process.env.PORT || 20223)
@@ -63,6 +63,18 @@ Bun.serve({
         return Response.json(await getCategoryById(categoryId))
       },
     },
+    '/api/categories/:categoryId/recipes': {
+      GET: async (req) => {
+        const categoryId = req.params.categoryId
+        return Response.json(
+          await getCategoryRecipes({
+            categoryId,
+            pagination: getPaginationParams(new URL(req.url)),
+          }),
+        )
+      },
+    },
+    '/api/*': notFound,
   },
   async fetch(req) {
     if (req.method !== 'GET') {

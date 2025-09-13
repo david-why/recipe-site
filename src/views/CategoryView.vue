@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import LoadingIcon from '@/components/LoadingIcon.vue'
-import { getCategoryById } from '@/service'
+import { getCategoryById, getCategoryRecipes } from '@/service'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import type { Category } from '~/shared/types'
+import type { Recipe, Category } from '~/shared/types'
 const route = useRoute()
 
 const categoryId = route.params.categoryId as string
@@ -11,19 +11,25 @@ const categoryId = route.params.categoryId as string
 // state
 
 const category = ref<Category | null>(null)
+const recipes = ref<Recipe[] | null>(null)
 
 // functions
 
 async function updateCategory() {
-  if (!categoryId) return
   const updatedCategory = await getCategoryById(categoryId)
   category.value = updatedCategory
+}
+
+async function updateCategoryRecipes() {
+  const updatedRecipes = await getCategoryRecipes(categoryId)
+  recipes.value = updatedRecipes
 }
 
 // events
 
 onMounted(async () => {
-  await updateCategory()
+  updateCategory()
+  updateCategoryRecipes()
 })
 </script>
 
@@ -33,5 +39,20 @@ onMounted(async () => {
   </div>
   <div v-else>
     <h2>{{ category.name }}</h2>
+    <div v-if="!recipes">
+      <LoadingIcon />
+    </div>
+    <div v-else>
+      <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-3" v-for="recipe in recipes" :key="recipe.id">
+          <div class="card">
+            <img class="card-img-top" :src="recipe.images[0]" />
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

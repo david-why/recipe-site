@@ -5,10 +5,7 @@ import WebsiteName from './components/WebsiteName.vue'
 const route = useRoute()
 
 const pages = computed(() =>
-  [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-  ].map((page) => ({
+  [{ name: 'Home', path: '/' }].map((page) => ({
     ...page,
     isActive: route.path === page.path,
   })),
