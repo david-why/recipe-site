@@ -16,3 +16,23 @@ export interface Category {
   id: string
   name: string
 }
+
+export interface RecipeIngredientGroup {
+  id: string
+  title: string
+  ingredients: RecipeIngredient[]
+}
+
+export interface RecipeIngredient {
+  id: string
+  name: string
+  optional: boolean
+  unit_name: string | null
+  preparation: string
+  quantity_start: number
+  quantity_end: number
+}
+
+export interface FullRecipe extends Recipe {
+  ingredient_groups: RecipeIngredientGroup[]
+}
