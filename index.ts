@@ -1,5 +1,7 @@
 import { readdirSync } from 'fs'
 import { resolve } from 'path'
+import { getRecipes } from './backend/database'
+import { getPaginationParams } from './backend/pagination'
 
 const PORT = Number(process.env.PORT || 20223)
 
@@ -14,13 +16,16 @@ class BizError extends Error {
   }
 }
 
-// handle SPA static routes
-
-const publicPath = resolve(__dirname, 'dist')
+// some constant routes
 const index = () =>
   new Response(Bun.file(`${publicPath}/index.html`), {
     headers: { 'Content-Type': 'text/html' },
   })
+const notFound = () => new Response('Not Found', { status: 404 })
+
+// handle SPA static routes
+
+const publicPath = resolve(__dirname, 'dist')
 
 const staticFiles: Record<string, () => Response> = {}
 for (const fileName of readdirSync(publicPath, { recursive: true }) as string[]) {
@@ -37,11 +42,19 @@ staticFiles['/'] = index
 Bun.serve({
   routes: {
     ...staticFiles,
+    '/api/recipes': async (req) => {
+      return Response.json(
+        await getRecipes({
+          pagination: getPaginationParams(new URL(req.url)),
+        }),
+      )
+    },
   },
   async fetch(req) {
     if (req.method !== 'GET') {
-      return new Response('Not Found', { status: 404 })
+      return notFound()
     }
+    console.log('Request:', req.url)
     return index()
   },
   error(error) {

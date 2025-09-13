@@ -7,8 +7,9 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "eslint.config.*",
-    "server/**/*",
-    "index.ts"
+    "backend/**/*",
+    "index.ts",
+    "shared"
    ],
   "compilerOptions": {
     "noEmit": true,
