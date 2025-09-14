@@ -18,14 +18,15 @@ Sustenance is a recipes website that lets you browse and search through a databa
 
 ## Technical stuff
 
-The [frontend](./src) is written with Vue.js and Bootstrap. The [backend](./index.ts) is written in pure TypeScript with [Bun](https://bun.com) the goated JavaScript runtime. The database used is PostgreSQL.
+The [frontend](./src) is written with Vue.js and Bootstrap. The [backend](./index.ts) is written in pure TypeScript with [Bun](https://bun.com) the goated JavaScript runtime *(typscript support ootb, comes with an http server & postgres driver, how much more can you ask for??)*. The database used is PostgreSQL.
 
 ## Selfhosted instructions
 
 It's pretty easy to selfhost this website:
 
 1. Install [Bun](https://bun.com) and [PostgreSQL](https://www.postgresql.org) (if not on another database server).
-2. Run `bun i` in repo root.
+2. Run `bun i` in repo root to install dependencies
 3. If needed, create a `.env` file to [configure the PostgreSQL database](https://bun.com/docs/api/sql#postgresql-environment-variables).
-4. Run `bun run build && bun prod` to start the production server.
+4. Set up the database by running `bun scripts/initdb.ts`.
+5. Run `bun run build && bun prod` to start the production server.
    1. Run `bun dev` instead to start a local development server.
