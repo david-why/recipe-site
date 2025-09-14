@@ -46,7 +46,7 @@ async function updateCollection() {
 async function updateRecipes() {
   recipesLoading.value = true
   try {
-    recipes.value = { recipes: await getCollectionRecipes(collectionId) }
+    recipes.value.recipes = await getCollectionRecipes(collectionId)
   } finally {
     recipesLoading.value = false
   }
