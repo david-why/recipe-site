@@ -57,9 +57,9 @@ onMounted(() => {
     <p>No recipes found.</p>
   </div>
   <div v-else>
-    <div class="row g-3">
+    <div class="row g-3 align-items-stretch">
       <div class="col-6 col-md-4 col-lg-3" v-for="recipe in recipes" :key="recipe.id">
-        <RecipeCard :recipe="recipe" />
+        <RecipeCard class="h-100" :recipe="recipe" />
       </div>
     </div>
   </div>

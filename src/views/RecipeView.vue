@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
 
     <div class="row">
       <!-- Info sidebar -->
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-md-4">
         <!-- Ingredients card -->
         <div class="card mb-4">
           <div class="card-body">
@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
       </div>
 
       <!-- Main content -->
-      <div class="col-12 col-lg-8">
+      <div class="col-12 col-md-8">
         <!-- Steps -->
         <div class="card mb-4" v-for="group in displayRecipe.step_groups" :key="group.id">
           <div class="card-body">
@@ -230,9 +230,12 @@ onBeforeUnmount(() => {
           <div class="card-body">
             <h5 class="card-title">Tips</h5>
             <ul>
-              <li class="mt-1" v-for="tip in displayRecipe.additional_info" :key="tip">
-                {{ tip }}
-              </li>
+              <li
+                class="mt-1"
+                v-for="tip in displayRecipe.additional_info"
+                :key="tip"
+                v-html="tip"
+              ></li>
             </ul>
           </div>
         </div>
@@ -241,13 +244,14 @@ onBeforeUnmount(() => {
         <div class="card mb-4" v-if="recipe.collections.length">
           <div class="card-body">
             <h5 class="card-title">In Collections</h5>
-            <ul class="list-unstyled row g-3">
+            <ul class="list-unstyled row g-3 align-items-stretch">
               <li
                 class="col-6 col-md-4 col-xl-3"
                 v-for="collection in recipe.collections"
                 :key="collection.id"
               >
                 <CollectionCard
+                  class="h-100"
                   :collection="collection"
                   hide-description
                   @click="onClickCollection(collection)"
@@ -283,8 +287,6 @@ onBeforeUnmount(() => {
 
 <style scoped>
 :deep(nobr) {
-  padding-inline-start: 0.3em;
-  padding-inline-end: 0.3em;
   font-weight: bold;
 }
 </style>

@@ -9,9 +9,7 @@ const emit = defineEmits<{
 
 // events
 function onSearchSubmit() {
-  if (searchQuery.value.trim() !== '') {
-    emit('search', searchQuery.value)
-  }
+  emit('search', searchQuery.value)
 }
 </script>
 

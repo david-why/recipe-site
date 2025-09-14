@@ -40,9 +40,9 @@ onMounted(async () => {
     <div v-if="loadingCategories">
       <LoadingIcon />
     </div>
-    <div class="row">
+    <div class="row align-items-stretch">
       <div class="col-6 col-md-4 col-lg-3 mb-3" v-for="category in categories" :key="category.id">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title mb-0">
               <RouterLink :to="{ name: 'category', params: { categoryId: category.id } }">{{

@@ -38,13 +38,18 @@ function onClick(id: string) {
   <div v-if="loading">
     <LoadingIcon />
   </div>
-  <div class="row" v-else>
+  <div class="row align-items-stretch" v-else>
     <div
       class="col-6 col-md-4 col-lg-3 mb-4"
       v-for="collection in collections"
       :key="collection.id"
     >
-      <CollectionCard :collection="collection" hide-description @click="onClick(collection.id)" />
+      <CollectionCard
+        class="h-100"
+        :collection="collection"
+        hide-description
+        @click="onClick(collection.id)"
+      />
     </div>
   </div>
 </template>

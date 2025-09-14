@@ -70,7 +70,7 @@ LEFT JOIN (
                 'preparation', ri.preparation
             )) FROM recipe_ingredients AS ri
             JOIN ingredients AS i ON ri.ingredient_id = i.id
-            JOIN units AS u2 ON ri.unit_id = u2.id
+            LEFT JOIN units AS u2 ON ri.unit_id = u2.id
             WHERE ri.group_id = rig.id)
         )) AS ingredient_groups
     FROM recipe_ingredient_groups AS rig
@@ -218,7 +218,7 @@ LEFT JOIN (
                 'preparation', ri.preparation
             )) FROM recipe_ingredients AS ri
             JOIN ingredients AS i ON ri.ingredient_id = i.id
-            JOIN units AS u2 ON ri.unit_id = u2.id
+            LEFT JOIN units AS u2 ON ri.unit_id = u2.id
             WHERE ri.group_id = rig.id)
         )) AS ingredient_groups
     FROM recipe_ingredient_groups AS rig

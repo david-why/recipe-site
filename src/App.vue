@@ -18,14 +18,8 @@ const pages = computed(() =>
 <template>
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
-      <RouterLink class="navbar-brand" to="/">
-        <img
-          class="d-inline-block align-text-top"
-          width="24"
-          height="24"
-          src="@/assets/icon256.png"
-        />
-        {{ ' ' }}
+      <RouterLink class="navbar-brand d-flex align-items-center gap-2" to="/">
+        <img width="24" height="24" src="@/assets/icon256.png" />
         <WebsiteName />
       </RouterLink>
       <button

@@ -41,7 +41,9 @@ const staticFiles: Record<string, () => Response> = {}
 for (const fileName of readdirSync(publicPath, { recursive: true }) as string[]) {
   const file = Bun.file(resolve(publicPath, fileName))
   if (await file.exists()) {
-    staticFiles[`/${fileName}`] = () => new Response(file)
+    staticFiles[`/${fileName}`] = () => {
+      return new Response(file)
+    }
   }
 }
 

@@ -49,9 +49,9 @@ onMounted(() => {
       <LoadingIcon />
     </div>
     <div v-else>
-      <div class="row g-3 mt-4">
+      <div class="row g-3 mt-4 align-items-stretch">
         <div class="col-6 col-md-4 col-lg-3" v-for="recipe in recipes" :key="recipe.id">
-          <RecipeCard :recipe="recipe" />
+          <RecipeCard class="h-100" :recipe="recipe" />
         </div>
       </div>
       <div v-if="recipes.length === 0">
