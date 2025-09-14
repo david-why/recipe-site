@@ -6,7 +6,26 @@ Sustenance is a recipes website that lets you browse and search through a databa
 
 ## Features
 
-- [x] Recipe browsing and searching
-- [ ] Collections (albums) of recipes
-- [ ] Categories (main, side, drinks, etc.) of recipes
-- [ ] 
+- [x] Recipe browsing
+- [x] Collections (albums) of recipes
+- [x] Categories (main, side, drinks, etc.) of recipes
+- [x] Searching recipes
+  - [x] By title
+  - [ ] Fuzzy search
+  - [ ] Advanced search (ingredients, collections, etc.)
+- [ ] Authentication system
+- [ ] Create your own recipes
+
+## Technical stuff
+
+The [frontend](./src) is written with Vue.js and Bootstrap. The [backend](./index.ts) is written in pure TypeScript with [Bun](https://bun.com) the goated JavaScript runtime. The database used is PostgreSQL.
+
+## Selfhosted instructions
+
+It's pretty easy to selfhost this website:
+
+1. Install [Bun](https://bun.com) and [PostgreSQL](https://www.postgresql.org) (if not on another database server).
+2. Run `bun i` in repo root.
+3. If needed, create a `.env` file to [configure the PostgreSQL database](https://bun.com/docs/api/sql#postgresql-environment-variables).
+4. Run `bun run build && bun prod` to start the production server.
+   1. Run `bun dev` instead to start a local development server.
