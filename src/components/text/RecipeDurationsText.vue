@@ -7,7 +7,7 @@ defineProps<{ recipe: Recipe }>()
 
 <template>
   <span v-if="recipe.active_time">
-    <i class="bi bi-fork-knife"></i>
+    <i class="bi bi-egg-fried"></i>
     <DurationText :time="recipe.active_time"></DurationText>
   </span>
   <template v-if="recipe.active_time && recipe.total_time"> · </template>

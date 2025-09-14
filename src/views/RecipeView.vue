@@ -137,7 +137,7 @@ onBeforeUnmount(() => {
         <h1>{{ recipe.title }}</h1>
         <ul class="list-unstyled d-flex flex-column gap-3 mt-4">
           <li v-if="recipe.active_time">
-            <i class="bi bi-fork-knife"></i> Preparation time:
+            <i class="bi bi-egg-fried"></i> Preparation time:
             <DurationText :time="recipe.active_time" />
           </li>
           <li v-if="recipe.total_time">
@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
             <DurationText :time="recipe.total_time" />
           </li>
           <li>
-            <i class="bi bi-egg-fried"></i> {{ recipe.serving_size }} {{ recipe.serving_unit }}
+            <i class="bi bi-fork-knife"></i> {{ recipe.serving_size }} {{ recipe.serving_unit }}
           </li>
           <li><i class="bi bi-gear"></i> Difficulty: {{ displayRecipe.difficulty }}</li>
         </ul>
@@ -226,7 +226,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Tips card -->
-        <div class="card mb-4">
+        <div class="card mb-4" v-if="recipe.additional_info.length">
           <div class="card-body">
             <h5 class="card-title">Tips</h5>
             <ul>
@@ -238,7 +238,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Collection list -->
-        <div class="card">
+        <div class="card mb-4" v-if="recipe.collections.length">
           <div class="card-body">
             <h5 class="card-title">In Collections</h5>
             <ul class="list-unstyled row g-3">
@@ -258,7 +258,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- Category list -->
-        <div class="card">
+        <div class="card mb-4" v-if="recipe.categories.length">
           <div class="card-body">
             <h5 class="card-title">Categories</h5>
             <div class="card-text">

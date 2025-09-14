@@ -1,39 +1,12 @@
-# recipe-site
+# Sustenance: Beautiful recipes website
 
-This template should help get you started developing with Vue 3 in Vite.
+Sustenance is a recipes website that lets you browse and search through a database of recipes. (And hopefully it looks good :D)
 
-## Recommended IDE Setup
+[Check it out](https://recipes.davidwhy.me) with sample data from [Thermomix® Cookidoo® website](https://cookidoo.thermomix.com)!
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-bun install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-bun dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-bun run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-bun lint
-```
+- [x] Recipe browsing and searching
+- [ ] Collections (albums) of recipes
+- [ ] Categories (main, side, drinks, etc.) of recipes
+- [ ] 
