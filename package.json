@@ -22,6 +22,8 @@
     "axios": "^1.11.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
+    "es6-proxy-polyfill": "^2.1.1",
+    "proxy-polyfill": "^0.3.2",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },

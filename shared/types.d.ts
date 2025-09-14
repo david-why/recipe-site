@@ -1,5 +1,5 @@
 export interface Recipe {
-  id: number
+  id: string
   title: string
   tags: string[]
   active_time: number | null

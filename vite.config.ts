@@ -11,7 +11,7 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     legacy({
-      targets: ['ios_saf >= 9'],
+      targets: 'ios_saf >= 9, dead',
       renderLegacyChunks: true,
       modernPolyfills: true,
       externalSystemJS: true,
@@ -28,5 +28,5 @@ export default defineConfig({
     },
     allowedHosts: true,
   },
-  base: './',
+  base: '/',
 })
