@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import CollectionCard from '@/components/CollectionCard.vue'
 import LoadingIcon from '@/components/LoadingIcon.vue'
 import DurationText from '@/components/text/DurationText.vue'
 import { getRecipeById } from '@/service'
 import { strip } from '@/utils'
 import { Carousel } from 'bootstrap'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import type { FullRecipe } from '~/shared/types'
+import { useRoute, useRouter } from 'vue-router'
+import type { Collection, FullRecipe } from '~/shared/types'
 const route = useRoute()
+const router = useRouter()
 
 const recipeId = route.params.recipeId as string
 
@@ -62,6 +64,10 @@ const updateRecipe = async () => {
 }
 
 // events
+
+function onClickCollection(collection: Collection) {
+  router.push({ name: 'collection', params: { collectionId: collection.id } })
+}
 
 onMounted(async () => {
   updateRecipe()
@@ -226,6 +232,26 @@ onBeforeUnmount(() => {
             <ul>
               <li class="mt-1" v-for="tip in displayRecipe.additional_info" :key="tip">
                 {{ tip }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Collection list -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">In Collections</h5>
+            <ul class="list-unstyled row g-3">
+              <li
+                class="col-6 col-md-4 col-xl-3"
+                v-for="collection in recipe.collections"
+                :key="collection.id"
+              >
+                <CollectionCard
+                  :collection="collection"
+                  hide-description
+                  @click="onClickCollection(collection)"
+                />
               </li>
             </ul>
           </div>

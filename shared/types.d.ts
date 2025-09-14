@@ -63,6 +63,7 @@ export interface FullRecipe extends Recipe {
   nutrition_groups: RecipeNutritionGroup[]
   step_groups: RecipeStepGroup[]
   categories: Category[]
+  collections: Collection[]
 }
 
 export interface Collection {

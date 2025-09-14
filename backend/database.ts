@@ -21,7 +21,8 @@ SELECT
     COALESCE(rsg.step_groups, '[]'::jsonb) AS step_groups,
     COALESCE(ru.utensils, '[]'::jsonb) AS utensils,
     COALESCE(rig.ingredient_groups, '[]'::jsonb) AS ingredient_groups,
-    COALESCE(rc.categories, '[]'::jsonb) AS categories
+    COALESCE(rc.categories, '[]'::jsonb) AS categories,
+    COALESCE(cr.collections, '[]'::jsonb) AS collections
 FROM recipes AS r
 LEFT JOIN (
     SELECT
@@ -39,6 +40,19 @@ LEFT JOIN (
     JOIN categories AS c ON rc.category_id = c.id
     GROUP BY rc.recipe_id
 ) AS rc ON r.id = rc.recipe_id
+LEFT JOIN (
+    SELECT
+        cr.recipe_id,
+        jsonb_agg(jsonb_build_object(
+            'id', c.id,
+            'title', c.title,
+            'description', c.description,
+            'image', c.image
+        )) AS collections
+    FROM collection_recipes AS cr
+    JOIN collections AS c ON cr.collection_id = c.id
+    GROUP BY cr.recipe_id
+) AS cr ON r.id = cr.recipe_id
 LEFT JOIN (
     SELECT
         rig.recipe_id,
@@ -155,7 +169,8 @@ SELECT
     COALESCE(rsg.step_groups, '[]'::jsonb) AS step_groups,
     COALESCE(ru.utensils, '[]'::jsonb) AS utensils,
     COALESCE(rig.ingredient_groups, '[]'::jsonb) AS ingredient_groups,
-    COALESCE(rc.categories, '[]'::jsonb) AS categories
+    COALESCE(rc.categories, '[]'::jsonb) AS categories,
+    COALESCE(cr.collections, '[]'::jsonb) AS collections
 FROM recipes AS r
 LEFT JOIN (
     SELECT
@@ -173,6 +188,19 @@ LEFT JOIN (
     JOIN categories AS c ON rc.category_id = c.id
     GROUP BY rc.recipe_id
 ) AS rc ON r.id = rc.recipe_id
+LEFT JOIN (
+    SELECT
+        cr.recipe_id,
+        jsonb_agg(jsonb_build_object(
+            'id', c.id,
+            'title', c.title,
+            'description', c.description,
+            'image', c.image
+        )) AS collections
+    FROM collection_recipes AS cr
+    JOIN collections AS c ON cr.collection_id = c.id
+    GROUP BY cr.recipe_id
+) AS cr ON r.id = cr.recipe_id
 LEFT JOIN (
     SELECT
         rig.recipe_id,
