@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
     <LoadingIcon />
   </div>
   <div v-else>
-    <div class="row mb-4">
+    <div class="row mb-2 mb-md-4">
       <div class="col-12 col-md-5">
         <div class="carousel slide" id="recipeCarousel" ref="carouselEl">
           <div class="carousel-indicators">
@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
           </button>
         </div>
       </div>
-      <div class="col-12 col-md-7 my-auto">
+      <div class="col-12 col-md-7 mt-4 my-md-auto">
         <h1>{{ recipe.title }}</h1>
         <ul class="list-unstyled d-flex flex-column gap-3 mt-4">
           <li v-if="recipe.active_time">
@@ -216,6 +216,18 @@ onBeforeUnmount(() => {
             <ol>
               <li class="mb-2" v-for="step in group.steps" :key="step.text" v-html="step.text"></li>
             </ol>
+          </div>
+        </div>
+
+        <!-- Tips card -->
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Tips</h5>
+            <ul>
+              <li class="mt-1" v-for="tip in displayRecipe.additional_info" :key="tip">
+                {{ tip }}
+              </li>
+            </ul>
           </div>
         </div>
 

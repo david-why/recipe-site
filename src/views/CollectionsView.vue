@@ -39,7 +39,11 @@ function onClick(id: string) {
     <LoadingIcon />
   </div>
   <div class="row" v-else>
-    <div class="col-lg-3 mb-4" v-for="collection in collections" :key="collection.id">
+    <div
+      class="col-6 col-md-4 col-lg-3 mb-4"
+      v-for="collection in collections"
+      :key="collection.id"
+    >
       <CollectionCard :collection="collection" hide-description @click="onClick(collection.id)" />
     </div>
   </div>
